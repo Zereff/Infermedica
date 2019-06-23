@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import settings from '../settings';
+import Api from '../api'; 
+import Search from './Search';
+import List from './List';
 
 const TYPE = 'symptom';
 const REQUEST_TIMEOUT = 500;
@@ -14,6 +16,8 @@ class Symptoms extends Component {
       symptoms: [],
       mapSymptoms: [],
     };
+
+    this.api = new Api();
   }
 
   updateSymptomList = e => {
@@ -22,12 +26,16 @@ class Symptoms extends Component {
     clearTimeout(timer);
 
     timer = setTimeout(() => {
-      this.search(inputValue, TYPE);
+      const result = this.api.search(inputValue, TYPE);
+      result.then(items => {
+        this.mapDataToEvidence(items);
+      });
+
     }, REQUEST_TIMEOUT);
   }
 
-  changeSymptom = e => {
-    const { checked, id } = e.target;
+  changeSymptom = target => {
+    const { checked, id } = target;
     const choiceId = checked ? 'present' : 'absent';
 
     this.setState(state => ({
@@ -39,16 +47,6 @@ class Symptoms extends Component {
         return item;
       })
     }));
-  }
-
-  search = async (key, type) => {
-    const response = await fetch(`https://api.infermedica.com/v2/search?phrase=${key}` +
-      `&sex=male&max_results=5&type=${type}`, {
-      method: 'GET',
-      headers: settings.headers
-    });
-
-    this.mapDataToEvidence(await response.json());
   }
 
   mapDataToEvidence = searchResult => {
@@ -75,10 +73,8 @@ class Symptoms extends Component {
             <h4>What's troubling you?</h4>
             
             <div className="form-group">
-              <input type="text"
-                placeholder="Headache"
-                onChange={this.updateSymptomList}
-                className="form-control" />
+              <Search callbackSymptomInput={this.updateSymptomList}
+                placeholder="Headache" />
             </div>
 
             {!this.state.symptoms.length ? (
@@ -86,19 +82,10 @@ class Symptoms extends Component {
             ) : (
               <Fragment>
                 <div className="form-group">
-                  {this.state.symptoms.map(symptom => (
-                    <div className="form-check" key={symptom.id}>
-                      <input type="checkbox"
-                        id={symptom.id}
-                        onChange={this.changeSymptom}
-                        className="form-check-input" />
-
-                      <label htmlFor={symptom.id}
-                        className="form-check-label">
-                        {symptom.label}
-                      </label>
-                    </div>
-                  ))}
+                  {this.state.symptoms.map(symptom => <List item={symptom}
+                    callbackItemList={this.changeSymptom}
+                    key={symptom.id} />
+                  )}
                 </div>
                 <Link className="link link-lg" to={`/risk-factors`}>Symptom assessment</Link>
               </Fragment>

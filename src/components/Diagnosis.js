@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import settings from '../settings';
 import Conditions from './Conditions';
 import Question from './Question';
+import Api from '../api';
 
 const ls = localStorage;
 
@@ -13,6 +13,8 @@ class Diagnosis extends Component {
       diagnosis: {},
       evidence: [],
     }
+
+    this.api = new Api();
 	}
 
 	initDiagnosis = async () => {
@@ -30,25 +32,14 @@ class Diagnosis extends Component {
       ls.setItem('symptomsCollection', JSON.stringify(symptomsCollection));
     }
 
-    this.getDiagnosis(symptomsCollection);
+    let diagnosis = this.api.doDiagnosis(symptomsCollection);
+    diagnosis.then(item => {
+      this.setState({
+        diagnosis: item,
+        evidence: symptomsCollection
+      });
+    })
 	}
-
-  getDiagnosis = async (evidence) => {
-    const responseDiagnosis = await fetch(`https://api.infermedica.com/v2/diagnosis`, {
-      method: 'POST',
-      headers: settings.headers,
-      body: JSON.stringify({
-        "sex": "male",
-        "age": 30,
-        "evidence": evidence
-      })
-    });
-
-    this.setState({
-      diagnosis: (await responseDiagnosis.json()),
-      evidence: evidence
-    });
-  }
 
 	updateDiagnosis = newSymptoms => {
     let symptomsCollection = JSON.parse(
@@ -57,7 +48,13 @@ class Diagnosis extends Component {
     
     ls.setItem('symptomsCollection', JSON.stringify(symptomsCollection));
 
-    this.getDiagnosis(symptomsCollection);
+    let diagnosis = this.api.doDiagnosis(symptomsCollection);
+    diagnosis.then(item => {
+      this.setState({
+        diagnosis: item,
+        evidence: symptomsCollection
+      });
+    })
 	}
 
 	componentWillMount() {
@@ -65,7 +62,7 @@ class Diagnosis extends Component {
 	}
 
 	render() {
-		let diagnosis = this.state.diagnosis;
+    let diagnosis = this.state.diagnosis;
 
 		return(
       <Fragment>

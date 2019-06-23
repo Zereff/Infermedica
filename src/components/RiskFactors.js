@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import commonRiskFactors from '../commonRiskFactors';
+import List from './List';
 
 class RiskFactors extends Component {
-
   constructor() {
 		super();
     this.state = {
@@ -24,8 +24,8 @@ class RiskFactors extends Component {
     });
   }
 
-  changeRiskFactor = e => {
-    const { checked, id } = e.target;
+  changeRiskFactor = target => {
+    const { checked, id } = target;
     const choiceId = checked ? 'present' : 'absent';
 
     this.setState(({mapRiskFactors}) => ({
@@ -58,19 +58,10 @@ class RiskFactors extends Component {
             {this.state.riskFactors.length > 0 &&
               <Fragment>
                 <div className="form-group">
-                  {this.state.riskFactors.map(riskFactor => (
-                    <div className="form-check" key={riskFactor.id}>
-                      <input type="checkbox"
-                        id={riskFactor.id}
-                        onChange={this.changeRiskFactor}
-                        className="form-check-input" />
-
-                      <label htmlFor={riskFactor.id}
-                        className="form-check-label">
-                        {riskFactor.name}
-                      </label>
-                    </div>
-                  ))}
+                  {this.state.riskFactors.map(riskFactor => <List item={riskFactor}
+                    callbackItemList={this.changeRiskFactor}
+                    key={riskFactor.id} />
+                  )}
                 </div>
                 <Link className="link link-lg" to={`/diagnosis`}>Diagnose</Link>
               </Fragment>
