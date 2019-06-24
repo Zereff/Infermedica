@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import reducer from '../reducers';
-import Home from './Home';
-import Symptoms from './Symptoms';
-import RiskFactors from './RiskFactors';
-import Diagnosis from './Diagnosis';
+import reducer from '../../reducers';
+import Home from './components/Home';
+import Symptoms from './components/Symptoms';
+import RiskFactors from './components/RiskFactors';
+import Diagnosis from './components/Diagnosis';
 
 const App = () => {
   const store = createStore(reducer);

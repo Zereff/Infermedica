@@ -1,0 +1,13 @@
+.navbar-light .navbar-toggler {
+  border-color: transparent;
+}
+
+.navbar-light .navbar-toggler-icon {
+	background-image: url(./images/nav-link.png);
+}
+
+.navbar-light .navbar-brand {
+	font-size: 30px;
+	font-weight: 300;
+	color: #003352;
+}

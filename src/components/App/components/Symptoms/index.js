@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Api from '../api'; 
-import Search from './Search';
-import List from './List';
+import Api from '../../../../api'; 
+import Nav from '../Nav';
+import Avatar from '../Avatar';
+import Search from '../Search';
+import List from '../List';
 
 const TYPE = 'symptom';
 const REQUEST_TIMEOUT = 500;
@@ -23,15 +25,16 @@ class Symptoms extends Component {
   updateSymptomList = e => {
     let inputValue = e.target.value.substr(0, 20);
 
-    clearTimeout(timer);
-
-    timer = setTimeout(() => {
-      const result = this.api.search(inputValue, TYPE);
-      result.then(items => {
-        this.mapDataToEvidence(items);
-      });
-
-    }, REQUEST_TIMEOUT);
+    if (inputValue.length > 0) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const result = this.api.search(inputValue, TYPE);
+        result.then(items => {
+          this.mapDataToEvidence(items);
+        });
+  
+      }, REQUEST_TIMEOUT);
+    }
   }
 
   changeSymptom = target => {
@@ -47,6 +50,8 @@ class Symptoms extends Component {
         return item;
       })
     }));
+
+    this.props.onAddSymptomList(this.state.mapSymptoms);
   }
 
   mapDataToEvidence = searchResult => {
@@ -61,35 +66,36 @@ class Symptoms extends Component {
     });
   }
 
-  componentDidMount() {
-    this.props.onAddSymptomList(this.state.mapSymptoms);
-  }
-
   render() {
     return (
       <div className="container">
         <div className="row">
           <div className="col">
-            <h4>What's troubling you?</h4>
-            
-            <div className="form-group">
+            <Nav />
+            <div className="text-center mt-6 mb-8">
+							<Avatar />
+						</div>
+            <p className="main text-center">
+              Tell us the symptom that's troubling you.</p>
+            <div className="form-group mt-5 mb-5">
               <Search callbackSymptomInput={this.updateSymptomList}
-                placeholder="Headache" />
+                placeholder="I have a headache" />
             </div>
 
-            {!this.state.symptoms.length ? (
-              <p className="lead">Tell us the symptom that's troubling you the most.</p>
-            ) : (
+            <p className="second text-center">We will try to recognize your symptoms 
+                  using Natural Language Processing algorithms.</p>
+
+            {this.state.symptoms.length > 0 &&
               <Fragment>
-                <div className="form-group">
+                <div className="form-group mt-6 mb-6">
                   {this.state.symptoms.map(symptom => <List item={symptom}
                     callbackItemList={this.changeSymptom}
                     key={symptom.id} />
                   )}
                 </div>
-                <Link className="link link-lg" to={`/risk-factors`}>Symptom assessment</Link>
+                <Link className="btn link-simple btn-lg btn-block mb-3" to={`/risk-factors`}>Continue</Link>
               </Fragment>
-            )}
+            }
           </div>
         </div>  
       </div>

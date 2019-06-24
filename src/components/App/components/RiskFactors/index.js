@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import commonRiskFactors from '../commonRiskFactors';
-import List from './List';
+import commonRiskFactors from './commonRiskFactors';
+import List from '../List';
 
 class RiskFactors extends Component {
   constructor() {
@@ -37,14 +37,12 @@ class RiskFactors extends Component {
         return item;
       })
     }));
+
+    this.props.onAddRiskFactorList(this.state.mapRiskFactors);
   }
 
   componentWillMount() {
     this.mappingRiskFactors(this.state.riskFactors);
-  }
-
-  componentDidMount() {
-    this.props.onAddRiskFactorList(this.state.mapRiskFactors);
   }
 
 	render() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Single from './Single';
-import GroupSingle from './GroupSingle';
-import GroupMultiple from './GroupMultiple';
+import Single from './components/Single';
+import GroupSingle from './components/GroupSingle';
+import GroupMultiple from './components/GroupMultiple';
 
 export default class Question extends Component {
 	constructor(props) {

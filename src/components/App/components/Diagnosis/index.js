@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import Conditions from './Conditions';
-import Question from './Question';
-import Api from '../api';
+import Conditions from './components/Conditions';
+import Question from './components/Question';
+import Api from '../../../../api';
 
 const ls = localStorage;
 
@@ -17,7 +17,7 @@ class Diagnosis extends Component {
     this.api = new Api();
 	}
 
-	initDiagnosis = async () => {
+	initDiagnosis = () => {
   	let symptomsCollection = this.props.store.symptomsReducer
       .concat(this.props.store.riskFactorsReducer)
       .map(item => {
@@ -32,13 +32,19 @@ class Diagnosis extends Component {
       ls.setItem('symptomsCollection', JSON.stringify(symptomsCollection));
     }
 
-    let diagnosis = this.api.doDiagnosis(symptomsCollection);
-    diagnosis.then(item => {
-      this.setState({
-        diagnosis: item,
-        evidence: symptomsCollection
-      });
-    })
+    // let diagnosis = this.api.doDiagnosis(symptomsCollection);
+    // diagnosis.then(item => {
+    //   this.setState({
+    //     diagnosis: item,
+    //     evidence: symptomsCollection
+    //   });
+    // });
+
+    let diagnosis = this.api.fixtures.diagnosis;
+    this.setState({
+      diagnosis: diagnosis,
+      evidence: symptomsCollection
+    });
 	}
 
 	updateDiagnosis = newSymptoms => {
@@ -54,7 +60,7 @@ class Diagnosis extends Component {
         diagnosis: item,
         evidence: symptomsCollection
       });
-    })
+    });
 	}
 
 	componentWillMount() {

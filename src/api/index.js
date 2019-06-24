@@ -3,6 +3,7 @@ import settings from './settings';
 export default class Api {
   constructor() {
     this.headers = settings.headers;
+    this.fixtures = settings.fixtures;
   }
 
   search = async (key, type) => {

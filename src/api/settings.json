@@ -1,0 +1,38 @@
+{
+	"headers": {
+		"Content-Type": "application/json",
+		"App-Id": "12f79865",
+		"App-Key": "91d91fa24f8808b33af0c53a5817bfef"
+	},
+	"fixtures": {
+		"diagnosis": {
+			"question": {
+				"type": "single",
+				"text": "Fixture question?",
+				"items": [
+					{
+						"id": "string",
+						"name": "Fixture name",
+						"choices": [
+							{
+								"id": "present",
+								"label": "Fixture label"
+							}
+						]
+					}
+				],
+				"extras": {}
+			},
+			"conditions": [
+				{
+					"id": "string",
+					"name": "Fixture name condition",
+					"common_name": "Fixture common name condition",
+					"probability": 0
+				}
+			],
+			"extras": {},
+			"should_stop": true
+		}
+	}
+}
