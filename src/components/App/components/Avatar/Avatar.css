@@ -1,3 +1,21 @@
 .avatar {
-  border-radius: 65px;
+  border-radius: 50%;
+  transition: all ease .3s;
+}
+
+.avatar:hover {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-sm {
+  width: 70px;
+  margin-right: 20%;
+}
+
+.avatar-md {
+  width: 134px;
+}
+
+.avatar-lg {
+  width: 266px;
 }

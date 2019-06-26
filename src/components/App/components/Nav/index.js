@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Avatar from '../Avatar';
 import './Nav.css';
 
-const Nav = () => {
+const Nav = ({options}) => {
   return (
-    <header className="mt-6">
+    <header className="mt-2">
       <nav className="navbar navbar-light">
-        <a className="navbar-brand" href="#">Hi Alex</a>
+        <a className="navbar-brand" href="#">
+          {'doctor' === options ? (
+            <Fragment>
+              <div className="marker"></div>
+              <div className="find-text">Show all doctors near me</div>
+            </Fragment>
+          ) : (
+            <Fragment>
+              {'avatar' === options && 
+                <Avatar size="s" />
+              }
+              Hi Alex
+            </Fragment>
+          )}
+        </a>
         <button className="navbar-toggler"
           type="button"
           data-toggle="collapse"

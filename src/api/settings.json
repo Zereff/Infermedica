@@ -1,34 +1,90 @@
 {
 	"headers": {
 		"Content-Type": "application/json",
-		"App-Id": "12f79865",
-		"App-Key": "91d91fa24f8808b33af0c53a5817bfef"
+		"App-Id": "b0eace4d",
+		"App-Key": "d8c6466f9ba305646e8b21f046f6f298"
 	},
 	"fixtures": {
 		"diagnosis": {
 			"question": {
-				"type": "single",
-				"text": "Fixture question?",
+				"type": "group_multiple",
+				"text": "How would you describe your headache?",
 				"items": [
 					{
-						"id": "string",
-						"name": "Fixture name",
+						"id": "s_25",
+						"name": "Pulsing or throbbing",
 						"choices": [
 							{
 								"id": "present",
-								"label": "Fixture label"
+								"label": "Yes"
+							},
+							{
+								"id": "absent",
+								"label": "No"
+							},
+							{
+								"id": "unknown",
+								"label": "Don't know"
+							}
+						]
+					},
+					{
+						"id": "s_604",
+						"name": "Feels like \"stabbing\" or \"drilling\"",
+						"choices": [
+							{
+								"id": "present",
+								"label": "Yes"
+							},
+							{
+								"id": "absent",
+								"label": "No"
+							},
+							{
+								"id": "unknown",
+								"label": "Don't know"
+							}
+						]
+					},
+					{
+						"id": "s_23",
+						"name": "Feels like pressure around my head",
+						"choices": [
+							{
+								"id": "present",
+								"label": "Yes"
+							},
+							{
+								"id": "absent",
+								"label": "No"
+							},
+							{
+								"id": "unknown",
+								"label": "Don't know"
 							}
 						]
 					}
-				],
+				],	
 				"extras": {}
 			},
 			"conditions": [
 				{
-					"id": "string",
-					"name": "Fixture name condition",
-					"common_name": "Fixture common name condition",
-					"probability": 0
+					"id": "c_131",
+					"name": "Otitis externa",
+					"common_name": "Otitis externa",
+					"probability": 0.1654
+				},
+				{
+					"id": "c_808",
+					"name": "Earwax blockage",
+					"common_name": "Earwax blockage",
+					"probability": 0.1113
+				},
+				{
+					"id": "c_121",
+					"name": "Acute viral tonsillopharyngitis",
+					"common_name": "Acute viral tonsillopharyngitis",
+					"probability": 0.0648
 				}
 			],
 			"extras": {},

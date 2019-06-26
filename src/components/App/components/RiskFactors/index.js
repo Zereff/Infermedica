@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import commonRiskFactors from './commonRiskFactors';
+import Nav from '../Nav';
+import Avatar from '../Avatar';
 import List from '../List';
 
 class RiskFactors extends Component {
@@ -50,18 +52,23 @@ class RiskFactors extends Component {
       <div className="container">
         <div className="row">
           <div className="col">
-            <p className="lead">
-              Risk-factors(e.g. smoking, insect bite or head injury)</p>
+            <Nav />
+						<div className="text-center mt-5 mb-5">
+							<Avatar />
+						</div>
+            <p className="main text-center mb-10">Bellow you see the most common risk factors.
+              Risk factors are very important before the actual interview begins.
+              This helps to steer the interview in the right direction and to reduce its length.</p>
 
             {this.state.riskFactors.length > 0 &&
               <Fragment>
-                <div className="form-group">
+                <div className="form-group mt-5 mb-6">
                   {this.state.riskFactors.map(riskFactor => <List item={riskFactor}
                     callbackItemList={this.changeRiskFactor}
                     key={riskFactor.id} />
                   )}
                 </div>
-                <Link className="link link-lg" to={`/diagnosis`}>Diagnose</Link>
+                <Link className="btn link-simple btn-lg btn-block" to={`/diagnosis`}>Continue</Link>
               </Fragment>
             }
           </div>

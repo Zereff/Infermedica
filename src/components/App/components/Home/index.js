@@ -10,10 +10,10 @@ const Home = () => {
 				<div className="row">
 					<div className="col">
 						<Nav />
-						<div className="text-center mt-6 mb-5">
+						<div className="text-center mt-5 mb-5">
 							<Avatar />
 						</div>
-						<p className="main text-center mb-20">Having 
+						<p className="main text-center mb-10">Having 
 							<span className="green">headache</span> or 
 							<span className="green">fever</span>?<br /><br />
 							I can help you find out what`s going

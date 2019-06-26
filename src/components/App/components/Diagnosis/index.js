@@ -69,6 +69,7 @@ class Diagnosis extends Component {
 
 	render() {
     let diagnosis = this.state.diagnosis;
+    console.log(diagnosis);
 
 		return(
       <Fragment>

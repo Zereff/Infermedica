@@ -21,7 +21,7 @@ export default class Api {
   }
 
   doDiagnosis = async (evidence) => {
-    const responseDiagnosis = await fetch(`https://api.infermedica.com/v2/diagnosis`, {
+    const response = await fetch(`https://api.infermedica.com/v2/diagnosis`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
@@ -31,6 +31,11 @@ export default class Api {
       })
     });
 
-    return await responseDiagnosis.json();
+    return await response.json();
+  }
+
+  getDoctors = async () => {
+    const response = await fetch(`https://top.md/api/doctors?onPage=2&orderBy=rating&specialty_id=60&city_id=1&include=firstapp%2Cdoctor%3Afrom(2019-05-26)%3Adays(7)`);
+    return await response.json();
   }
 }

@@ -72,28 +72,27 @@ class Symptoms extends Component {
         <div className="row">
           <div className="col">
             <Nav />
-            <div className="text-center mt-6 mb-8">
+            <div className="text-center mt-5 mb-5">
 							<Avatar />
 						</div>
-            <p className="main text-center">
+            <p className="main text-center mb-5">
               Tell us the symptom that's troubling you.</p>
-            <div className="form-group mt-5 mb-5">
+            <div className="form-group">
               <Search callbackSymptomInput={this.updateSymptomList}
                 placeholder="I have a headache" />
             </div>
-
-            <p className="second text-center">We will try to recognize your symptoms 
-                  using Natural Language Processing algorithms.</p>
+            <p className="second text-center mt-4">We will try to recognize your symptoms 
+              using Natural Language Processing algorithms.</p>
 
             {this.state.symptoms.length > 0 &&
               <Fragment>
-                <div className="form-group mt-6 mb-6">
+                <div className="form-group mt-5 mb-6">
                   {this.state.symptoms.map(symptom => <List item={symptom}
                     callbackItemList={this.changeSymptom}
                     key={symptom.id} />
                   )}
                 </div>
-                <Link className="btn link-simple btn-lg btn-block mb-3" to={`/risk-factors`}>Continue</Link>
+                <Link className="btn link-simple btn-lg btn-block" to={`/risk-factors`}>Continue</Link>
               </Fragment>
             }
           </div>

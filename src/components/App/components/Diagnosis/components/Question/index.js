@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Nav from '../../../Nav';
+import Avatar from '../../../Avatar';
 import Single from './components/Single';
 import GroupSingle from './components/GroupSingle';
 import GroupMultiple from './components/GroupMultiple';
@@ -37,8 +39,11 @@ export default class Question extends Component {
       <div className="container">
         <div className="row">
           <div className="col">
-						<h4>Question</h4>
-						<p className="lead">{question.text}</p>
+						<Nav />
+						<div className="text-center mt-5 mb-5">
+							<Avatar />
+						</div>
+						<p className="main text-center mb-10">{question.text}</p>
 						{questionType}
 					</div>	
 				</div>

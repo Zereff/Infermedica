@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Symptoms from './components/Symptoms';
 import RiskFactors from './components/RiskFactors';
 import Diagnosis from './components/Diagnosis';
+import Doctor from './components/Diagnosis/components/Conditions/components/Doctor';
 
 const App = () => {
   const store = createStore(reducer);
@@ -19,6 +20,7 @@ const App = () => {
           <Route exact path='/symptoms' component={Symptoms} />
           <Route exact path='/risk-factors' component={RiskFactors} />
           <Route exact path='/diagnosis' component={Diagnosis} />
+          <Route path='/doctors/:id' component={Doctor} />
       </Router>
     </Provider>
   );

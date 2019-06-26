@@ -41,7 +41,7 @@ export default class GroupMultiple extends Component {
 	}
 
 	componentDidUpdate() {
-		let elm = document.querySelector('button');
+		let elm = document.querySelector('button.next-btn');
 		elm.style.visibility = 'hidden';
 
 		if (this.state.symptoms.findIndex(item => item.choice_id === 'present') !== -1) {
@@ -52,8 +52,8 @@ export default class GroupMultiple extends Component {
 	render() {
 		return (
 			<Fragment>
-				<div className="form-group">
-					{this.props.items.map((item) =>
+				<div className="form-group mb-10">
+					{this.props.items.map(item =>
 						<div key={item.id} className="form-check">
 							<input type="checkbox"
 								id={item.id}
@@ -62,14 +62,13 @@ export default class GroupMultiple extends Component {
 								onChange={this.checkSymptom}
 								className="form-check-input" />
 
-							<label htmlFor={item.id}
-								className="form-check-label">
+							<label htmlFor={item.id} className="form-check-label">
 								{item.name}
 							</label>
 						</div>
 					)}
 				</div>
-				<button className="btn btn-primary btn-lg btn-block next-btn" onClick={this.handleSymptoms}>Next</button>
+				<button className="btn link-simple btn-lg btn-block next-btn" onClick={this.handleSymptoms}>Next</button>
 			</Fragment>
 		);
 	}

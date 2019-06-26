@@ -18,7 +18,7 @@ export default class Single extends Component {
 						id={this.props.items[0].id}
 						value={item.id}
 						onClick={this.handleSymptom}
-						className="btn btn-primary btn-lg btn-block">{item.label}</button>
+						className="btn link-simple btn-lg btn-block mb-3">{item.label}</button>
 				)}
 			</Fragment>
 		);
