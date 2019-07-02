@@ -4,6 +4,8 @@ import Nav from '../Nav';
 import Avatar from '../Avatar';
 
 const Home = () => {
+	localStorage.setItem('evidence', []);
+
 	return (
 		<Fragment>
 			<div className="container">

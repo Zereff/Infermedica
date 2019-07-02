@@ -4,61 +4,42 @@ import Conditions from './components/Conditions';
 import Question from './components/Question';
 import Api from '../../../../api';
 
-const ls = localStorage;
-
 class Diagnosis extends Component {
 	constructor() {
 		super();
     this.state = {
       diagnosis: {},
-      evidence: [],
     }
 
     this.api = new Api();
 	}
 
 	initDiagnosis = () => {
-  	let symptomsCollection = this.props.store.symptomsReducer
-      .concat(this.props.store.riskFactorsReducer)
-      .map(item => {
-        item['initial'] = true;
-        return item;
-      });
+    // let evidence = this.props.store.evidenceReducer;
 
-    // use local storage in case of redux storage is empty
-    if (!symptomsCollection.length) {
-      symptomsCollection = JSON.parse(ls.getItem('symptomsCollection'));
-    } else {
-      ls.setItem('symptomsCollection', JSON.stringify(symptomsCollection));
-    }
-
-    // let diagnosis = this.api.doDiagnosis(symptomsCollection);
+    // let diagnosis = this.api.doDiagnosis(evidence);
     // diagnosis.then(item => {
     //   this.setState({
     //     diagnosis: item,
-    //     evidence: symptomsCollection
     //   });
     // });
 
     let diagnosis = this.api.fixtures.diagnosis;
     this.setState({
       diagnosis: diagnosis,
-      evidence: symptomsCollection
     });
+    console.log(diagnosis);
 	}
 
-	updateDiagnosis = newSymptoms => {
-    let symptomsCollection = JSON.parse(
-      ls.getItem('symptomsCollection')
-    ).concat(newSymptoms);
-    
-    ls.setItem('symptomsCollection', JSON.stringify(symptomsCollection));
+	updateDiagnosis = newEvidence => {
+    this.props.onAddEvidence(newEvidence);
+    let evidence = this.props.store.evidenceReducer.concat(newEvidence);
+    console.log(evidence);
 
-    let diagnosis = this.api.doDiagnosis(symptomsCollection);
+    let diagnosis = this.api.doDiagnosis(evidence);
     diagnosis.then(item => {
       this.setState({
         diagnosis: item,
-        evidence: symptomsCollection
       });
     });
 	}
@@ -94,4 +75,12 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Diagnosis);
+const dispatchElement = dispatch => {
+  return {
+    onAddEvidence: evidence => {
+      dispatch({ type: 'ADD_EVIDENCE', payload: evidence });
+    }
+  }
+}
+
+export default connect(mapStateToProps, dispatchElement)(Diagnosis);

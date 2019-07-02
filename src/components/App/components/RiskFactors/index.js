@@ -13,7 +13,11 @@ class RiskFactors extends Component {
       riskFactors: commonRiskFactors,
       mapRiskFactors: [],
     };
-	}
+  }
+  
+  componentWillMount() {
+    this.mappingRiskFactors(this.state.riskFactors);
+  }
 
   mappingRiskFactors = riskFactors => {
     this.setState({
@@ -27,27 +31,44 @@ class RiskFactors extends Component {
   }
 
   changeRiskFactor = target => {
-    const { checked, id } = target;
-    const choiceId = checked ? 'present' : 'absent';
-
-    this.setState(({mapRiskFactors}) => ({
-      mapRiskFactors: mapRiskFactors.map(item => {
-        if (id === item.id) {
-          item.choice_id = choiceId
-        }
-
-        return item;
-      })
-    }));
-
-    this.props.onAddRiskFactorList(this.state.mapRiskFactors);
+    if(!target.checked) {
+      this.addElement(target.id)
+    } else {
+      this.removeElement(target.id);
+    }
   }
 
-  componentWillMount() {
-    this.mappingRiskFactors(this.state.riskFactors);
+  addElement = id => {
+    this.setState(({mapRiskFactors}) => ({
+      mapRiskFactors: mapRiskFactors.filter(item => item.id === id)
+    }));
+  }
+
+  removeElement = id => {
+    this.setState(({mapRiskFactors}) => ({
+      mapRiskFactors: [...mapRiskFactors, id]
+    }));
+  }
+
+  addRiskFactorsToStore = () => {
+    this.props.onAddEvidence(
+      this.mapRiskFactorsToEvidence()
+    );
+  }
+
+  mapRiskFactorsToEvidence = () => {
+    return this.state.riskFactors.map(item => {
+      let choiceId = this.state.mapRiskFactors.includes(item.id) ? 'present' : 'absent';
+
+      return {
+        id: item.id,
+        choice_id: choiceId
+      }
+    });
   }
 
 	render() {
+    console.log(this.props.store);
 		return (
       <div className="container">
         <div className="row">
@@ -68,7 +89,9 @@ class RiskFactors extends Component {
                     key={riskFactor.id} />
                   )}
                 </div>
-                <Link className="btn link-simple btn-lg btn-block" to={`/diagnosis`}>Continue</Link>
+                <Link className="btn link-simple btn-lg btn-block"
+                  to="/diagnosis"
+                  onClick={this.addRiskFactorsToStore}>Continue</Link>
               </Fragment>
             }
           </div>
@@ -86,8 +109,8 @@ const mapStateToProps = state => {
 
 const dispatchElement = dispatch => {
   return {
-    onAddRiskFactorList: riskFactors => {
-      dispatch({ type: 'ADD_RISK_FACTORS', payload: riskFactors });
+    onAddEvidence: evidence => {
+      dispatch({ type: 'ADD_EVIDENCE', payload: evidence });
     }
   }
 }

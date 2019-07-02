@@ -1,21 +1,27 @@
-.avatar {
+.avatar-wrapper {
+  overflow: hidden;
+  text-align: center;
   border-radius: 50%;
-  transition: all ease .3s;
+  margin: 0 auto;
+  /* transition: all ease .3s; */
 }
 
-.avatar:hover {
+/* .avatar-wrapper:hover {
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-}
+} */
 
 .avatar-sm {
   width: 70px;
-  margin-right: 20%;
+  height: 70px;
+  margin-right: 2vw;
 }
 
 .avatar-md {
   width: 134px;
+  height: 134px;
 }
 
 .avatar-lg {
   width: 266px;
+  height: 266px;
 }

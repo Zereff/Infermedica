@@ -7,9 +7,8 @@ import Avatar from '../Avatar';
 import Search from '../Search';
 import List from '../List';
 
-const TYPE = 'symptom';
-const REQUEST_TIMEOUT = 500;
-var timer = null;
+const TIMEOUT = 500;
+let timer = null;
 
 class Symptoms extends Component {
   constructor() {
@@ -23,50 +22,61 @@ class Symptoms extends Component {
   }
 
   updateSymptomList = e => {
-    let inputValue = e.target.value.substr(0, 20);
+    let input = e.target.value.substr(0, 20);
 
-    if (inputValue.length > 0) {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        const result = this.api.search(inputValue, TYPE);
-        result.then(items => {
-          this.mapDataToEvidence(items);
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+
+      this.api.searchSymptoms(input)
+        .then(items => {
+          this.setState({
+            symptoms: items
+          });
         });
-  
-      }, REQUEST_TIMEOUT);
-    }
+
+    }, TIMEOUT);
   }
 
   changeSymptom = target => {
-    const { checked, id } = target;
-    const choiceId = checked ? 'present' : 'absent';
-
-    this.setState(state => ({
-      mapSymptoms: state.mapSymptoms.map(item => {
-        if (id === item.id) {
-          item.choice_id = choiceId
-        }
-
-        return item;
-      })
-    }));
-
-    this.props.onAddSymptomList(this.state.mapSymptoms);
+    if(!target.checked) {
+      this.addElement(target.id)
+    } else {
+      this.removeElement(target.id);
+    }
   }
 
-  mapDataToEvidence = searchResult => {
-    this.setState({
-      symptoms: searchResult,
-      mapSymptoms: searchResult.map(item => {
-        return {
-          id: item.id,
-          choice_id: 'absent'
-        }
-      })
+  addElement = id => {
+    this.setState(({mapSymptoms}) => ({
+        mapSymptoms: mapSymptoms.filter(item => item.id === id)
+    }));
+  }
+
+  removeElement = id => {
+    this.setState(({mapSymptoms}) => ({
+      mapSymptoms: [...mapSymptoms, id]
+    }));
+  }
+
+  addSymptomsToStore = () => {
+    this.props.onAddEvidence(
+      this.mapSymptomsToEvidence()
+    );
+  }
+
+  mapSymptomsToEvidence = () => {
+    return this.state.symptoms.map(item => {
+      let choiceId = this.state.mapSymptoms.includes(item.id) ? 'present' : 'absent';
+
+      return {
+        id: item.id,
+        choice_id: choiceId,
+        initial: true
+      }
     });
   }
 
   render() {
+    console.log(this.props.store);
     return (
       <div className="container">
         <div className="row">
@@ -77,10 +87,12 @@ class Symptoms extends Component {
 						</div>
             <p className="main text-center mb-5">
               Tell us the symptom that's troubling you.</p>
+
             <div className="form-group">
               <Search callbackSymptomInput={this.updateSymptomList}
                 placeholder="I have a headache" />
             </div>
+            
             <p className="second text-center mt-4">We will try to recognize your symptoms 
               using Natural Language Processing algorithms.</p>
 
@@ -92,7 +104,9 @@ class Symptoms extends Component {
                     key={symptom.id} />
                   )}
                 </div>
-                <Link className="btn link-simple btn-lg btn-block" to={`/risk-factors`}>Continue</Link>
+                <Link className="btn link-simple btn-lg btn-block"
+                  to="/risk-factors"
+                  onClick={this.addSymptomsToStore}>Continue</Link>
               </Fragment>
             }
           </div>
@@ -110,8 +124,8 @@ const mapStateToProps = state => {
 
 const dispatchElement = dispatch => {
   return {
-    onAddSymptomList: symptoms => {
-      dispatch({ type: 'ADD_SYMPTOMS', payload: symptoms });
+    onAddEvidence: evidence => {
+      dispatch({ type: 'ADD_EVIDENCE', payload: evidence });
     }
   }
 }

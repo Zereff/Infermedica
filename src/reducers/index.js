@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import symptomsReducer from './symptomsReducer';
-import riskFactorsReducer from './riskFactorsReducer';
+import evidenceReducer from './evidenceReducer';
 
 export default combineReducers({
-	symptomsReducer,
-	riskFactorsReducer
+	evidenceReducer
 });

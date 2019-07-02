@@ -15,12 +15,17 @@ const Avatar = ({src, size}) => {
         styleSize = 'avatar-lg';
         break;
     default:
+        styleSize = 'avatar-default';
   }
 
-  return <img 
-    className={`avatar ${styleSize}`}
-    src={src ? src : defaultImage}
-    alt="Avatar" />;
+  return (
+    <div className={`avatar-wrapper ${styleSize}`}>
+      <img className="avatar"
+        src={src ? src : defaultImage}
+        alt="Avatar"
+      />
+    </div>
+  );
 }
 
 export default Avatar;

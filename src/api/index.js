@@ -6,9 +6,9 @@ export default class Api {
     this.fixtures = settings.fixtures;
   }
 
-  search = async (key, type) => {
+  searchSymptoms = async (key, type) => {
     const response = await fetch(`https://api.infermedica.com/v2/search?phrase=${key}` +
-      `&sex=male&age=30&max_results=5&type=${type}`, {
+      `&sex=male&age=30&max_results=5&type=symptom`, {
       method: 'GET',
       headers: this.headers
     });

@@ -16,11 +16,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/symptoms' component={Symptoms} />
-          <Route exact path='/risk-factors' component={RiskFactors} />
-          <Route exact path='/diagnosis' component={Diagnosis} />
-          <Route path='/doctors/:id' component={Doctor} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/symptoms" component={Symptoms} />
+          <Route exact path="/risk-factors" component={RiskFactors} />
+          <Route exact path="/diagnosis" component={Diagnosis} />
+          <Route path="/doctors/:id" component={Doctor} />
       </Router>
     </Provider>
   );
